@@ -23,7 +23,8 @@ export default async function ClientesPage() {
       sales:sales(total, status)
     `)
     .eq("tenant_id", member.tenant_id)
-    .order("name");
+    .order("name")
+    .limit(100);
 
   return (
     <ClientesClient

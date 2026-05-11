@@ -41,7 +41,8 @@ export default async function ProdutosPage() {
         inventory_balances(qty)
       `)
       .eq("tenant_id", userData.tenantId)
-      .order("created_at", { ascending: false }),
+      .order("created_at", { ascending: false })
+      .limit(100),
     supabase
       .from("product_categories")
       .select("id, name")

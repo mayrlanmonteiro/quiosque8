@@ -35,7 +35,8 @@ export default async function VendasPage() {
       .select(`id, name, sku, price, cost, inventory_balances(qty)`)
       .eq("tenant_id", member.tenant_id)
       .eq("active", true)
-      .order("name"),
+      .order("name")
+      .limit(200),
     supabase
       .from("customers")
       .select("id, name, phone")

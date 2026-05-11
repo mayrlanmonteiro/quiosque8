@@ -2,8 +2,7 @@ import { Metadata } from "next";
 import { createClient, getCachedAuthUser } from "@/lib/supabase/server";
 import { DashboardHeader } from "./_components/dashboard-header";
 import { KpiCards } from "./_components/kpi-cards";
-import { SalesChart } from "./_components/sales-chart";
-import { TopProductsChart } from "./_components/top-products-chart";
+import dynamic from "next/dynamic";
 import { LowStockList } from "./_components/low-stock-list";
 import { RecentSalesList } from "./_components/recent-sales-list";
 import { getDashboardSummary, getSalesTimeseries, getTopProducts } from "@/lib/dashboard/queries";
@@ -11,6 +10,17 @@ import { getDateRange, DatePreset } from "@/lib/dashboard/date-utils";
 import { getCachedUserData } from "@/lib/cache";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { revalidatePath } from "next/cache";
+
+const SalesChart = dynamic(() => import("./_components/sales-chart").then(m => m.SalesChart), {
+  loading: () => <Skeleton className="col-span-2 h-[380px] rounded-xl" />,
+  ssr: false,
+});
+
+const TopProductsChart = dynamic(() => import("./_components/top-products-chart").then(m => m.TopProductsChart), {
+  loading: () => <Skeleton className="h-[380px] rounded-xl" />,
+  ssr: false,
+});
 
 export const metadata: Metadata = {
   title: "Dashboard — Quiosque8",
