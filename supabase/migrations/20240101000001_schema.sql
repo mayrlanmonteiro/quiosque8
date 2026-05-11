@@ -117,11 +117,11 @@ CREATE INDEX IF NOT EXISTS idx_product_variants_product_id ON product_variants(p
 
 -- Saldo de estoque (por produto/variante)
 CREATE TABLE IF NOT EXISTS inventory_balances (
+  id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   tenant_id   UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
   product_id  UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
   variant_id  UUID REFERENCES product_variants(id) ON DELETE CASCADE,
-  qty         NUMERIC(12,3) NOT NULL DEFAULT 0,
-  PRIMARY KEY (tenant_id, product_id, COALESCE(variant_id, '00000000-0000-0000-0000-000000000000'::UUID))
+  qty         NUMERIC(12,3) NOT NULL DEFAULT 0
 );
 
 -- Unique sem variant
